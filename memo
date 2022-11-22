@@ -1,0 +1,151 @@
+강의특징
+1. 혼자서 코드 짜는 법 알려줌
+2. 어렵게 안함
+어려운 말 안씀
+
+개발환경 셋팅
+1. node.js 설치
+2. vscode 설치
+
+프로젝트 생성
+1. 폴더 생성
+
+JSX 문법
+1. class = className
+2. 변수 넣을 땐 {중괄호} - 데이터바인딩
+3. style 넣을 땐 style ={{color : red}}
+뺄셈기호는 다 뺴야함 ex)font-size = fontSize
+
+
+state
+왜 state 써야함 ?
+변수가 변경이 되면 html에 자동으로 반영이 안되는데 state는 자동으로 HTML 재렌더링됨
+
+배열과 오브젝트는 
+원본은 보존하는게 좋음
+
+State안에 있는 배열은 
+값을 수정하거나 할 때 변수를 설정해 ex) let arr =[...기존State배열이름] 으로
+배열을 벗겨낸후 사용한다
+
+State가 배열이나/객체면 독립적 카피본을 만들어서 수정해야함
+
+배열 정렬함수 sort() 
+오름차순 , 내림차순 순으로 정렬
+문자열로 인식 
+
+
+어떤걸 컴포넌트로 만들면 좋은까?
+1. 반복적인 HTML 축약할 때
+2. 큰 페이지들 
+3. 자주 변경되는 것들
+
+컴포넌트 단점:
+state를 가져다 쓰지 못함
+
+[ 동적인 UI 만드는 과정 ]
+1. HTML CSS로 미리 디자인 완성
+2. UI의 현재 상태를 state로 저장
+3. state에 따라 UI가 어떻게 보일지 작성
+
+map 함수()
+1. 배열 자료 갯수만큼 한수안의 코드 실행해줌(반복)
+2. 함수의 첫번째 파라미터는 배열안에 있던 자료임
+    두번 째 파라미터는 반복문 돌 때 마다 0부터 1씩 증가하는 정수(인덱스)
+3. return 추가하면 그 리턴 값을 배열에 담아줌
+
+중괄호 안에서는 map함수 사용가능 (같은 HTML 반복생성)
+
+부모 -> 자식 state 전송하는법
+1. <자식컴포넌트 작명={state이름}>
+2. props 파라미터 등록후 props.작명(보통 state명이랑 같이함) 사용
+
+상위 HTML로 퍼지는 이벤트버블링을 막고싶으면
+e.stopPropagation()
+
+부트스트랩
+
+
+object 자료 설명
+자료 이름을 꼭 적어줘야함
+let b = {name : 'kim', age : 20}
+
+ex) 이렇게 가져올수 있다 b.name b.age 
+
+리액트 페이지(상세페이지, 장바구니페이지)
+리액트에서 페이지 나누는 법
+1. 컴포넌트 만들어서 상세페이지내용 채움
+2. 누가 / detail 접속하면 그 컴포넌트 보여줌
+
+***리액트 라우터돔
+라이브러리 쓰면 쉽게 페이지 만들수있음
+
+순서 
+1.  <BrowserRouter>
+    <App />
+    </BrowserRouter> 
+    인덱스 js 파일에 임폴트로 브라우저라우터 가져온후 앱 밖에 랩핑
+2. import { Routes,Route, Link } from 'react-router-dom';
+    앱 js 파일에 임폴트로 위와 같이 가져옴
+3.  <Routes>
+    <Route path='/detail' element={<div>상세페이지임</div>} /> 
+    <Route path='/about' element={<div>어바웃페이지임</div>} />
+    </Routes>
+    라우터스 안에 가져올 페이지(Route)를 가져와서 path에 이동할 주소
+    element로 가져올 내용 (컴포넌트 , 페이지 등) 기입
+
+페이지 이동을 도와주는
+useNavigate(); 인자에 url 경로를 쓰면 매끄럽게 이동, 콜백함수
+
+404 페이지는 주소값을 오타를 냈을 때 없는 페이지에요라고 띄워주고 싶을 때
+주소값 path="*" (모든것 오타포함) element={<div>없는페이지입니다}
+
+<Route path='/about' element={<about/>} /> 
+        <Route path='member' element={<about/>} /> 
+        <Route path='location' element={<about/>} /> 
+<Route/>
+
+라우트 안에 path값안 상세페이지 이동시키기 위한 네스티드 라우터예시
+Outlet은 네스티드 라우터 보여줄 위치를 설정
+
+****URL 파라미터
+useParams(); 
+유저가 URL파라미터에 입력한거 가져오려면 쓰면됨
+
+
+styled-commpoenets 장점
+1. 컴포넌트 안에서 바로 작성가능(CSS 컴포넌트화)
+2. 스타일이 다른 js파일로 오염되지 않음
+3. 로딩시간을 단축시켜줌
+
+useEffect 
+컴포넌트의 Lifecycle (생명주기)
+페이지에 장착되기도 하고 (mount)
+가끔 업데이트 되고 (update)
+필요없으면 제거 되고(unmount) 
+
+왜쓰는가 ?
+중간 중간 코드실행가능
+마운트 되거나 업데이트 될때 실행됨 useEffect
+
+useEffect 바깥에 넣어도 똑같음
+
+useEffect 동작원리
+1.useEffect 안에 있는 코드는 html 렌더링 후에 동작합니다
+2.useEffect 안에 적는 코드들은 - 어려운 연산
+3. 서버에서 데이터 가져오는 작업
+4. 타이머 장착할 
+useEffect 동작 전에 실행되는 
+return () => {   ex)  동작 전에 청소 시키는 역할
+    코드     
+}
+
+결론
+useEffect(()=>{   }) - 1. 재렌더링마다 코드 실행시킬 때
+useEffect(()=>{   }, []) - 2. mount시 1회 코드 실행시킬 때 5. [count] 특정 state 변경시 실행하려면
+useEffect(()=>{ 
+    return ()=> {
+        3. unmount시 1회 코드 실행할 때
+    }
+    },[])
+4. useEffect 실행 전에 뭔가 실행하려면 언제나 return ()=> {} 클린업 함수 
