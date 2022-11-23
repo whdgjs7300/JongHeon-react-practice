@@ -1,21 +1,26 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Button  from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import {useState} from 'react';
+import {createContext, useState} from 'react';
 import data from './data';
 import { Routes,Route, Link, useNavigate, Outlet } 
 from 'react-router-dom';
-import Detail from './Page/Detail';
+import Detail from './Page/Detail'; 
+import axios from 'axios';
+import Cart from './Page/Cart';
 
+// State 보관함 
+  export let Context1 = createContext() 
 
 function App() {
-  let [shoes] = useState(data);
+  let [shoes, setShoes] = useState(data);
+  let [재고] = useState([10,11,12]);
   let navigate = useNavigate();
+  
 
-
+  
 
   return (  
     <div className="App">
@@ -28,7 +33,7 @@ function App() {
           <Navbar.Brand href="#home">ShoeShop</Navbar.Brand>
           <Nav className="me-auto">
           <Link onClick={()=>{ navigate('/') }} to="/">홈</Link>
-            <Link onClick={()=>{ navigate('/detail') }} to="detail">상세페이지</Link>
+            <Link onClick={()=>{ navigate('/detail') }} to="/detail">상세페이지</Link>
             
           </Nav> 
         </Container>
@@ -38,26 +43,43 @@ function App() {
 
     <Routes>
       <Route path='/' element={
-        <div> 
-            <div className='main-bg'> 
+        <div>  
+            <div className='main-bg'>  
           </div> 
       <div className='container'>  
         <div className='row'> 
           { 
             shoes.map((a,i)=>{  
               return( 
-                <Card shoes={shoes[i]} i={i+1}></Card>
+                <Card key={a} shoes={shoes[i]} i={i+1}></Card>
               )  
-            }) 
+            })  
           }    
           
 
             
-        </div>
+        </div> 
       </div>   
+      <button onClick={()=>{
+        axios.get('https://codingapple1.github.io/shop/data2.json')
+        .then((결과)=>{      // 성공했을 경우  
+          let copy = [...shoes, ...결과.data];
+          setShoes(copy);
+        }) 
+        
+        
+      }}>더보기</button>
         </div>
       } /> 
-      <Route path='/detail/:id' element={<Detail shoes={shoes} />} /> 
+      <Route path='/detail/:id' element={
+    <Context1.Provider value={{ 재고, shoes}}>
+      <Detail shoes={shoes} /> 
+    </Context1.Provider>    
+        } />  
+        <Route path='/cart' element={<Cart/>}>
+
+
+        </Route>
       
       
 
@@ -71,6 +93,7 @@ function App() {
         <Route path='two' element={<div>생일기념 쿠폰받기</div>} />
       </Route>
 
+      
     </Routes>
 
 
@@ -79,7 +102,7 @@ function App() {
 
     </div>
   );
-}
+} 
 function About() {
   return ( 
     <div>

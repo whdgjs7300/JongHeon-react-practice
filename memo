@@ -17,7 +17,7 @@ JSX 문법
 뺄셈기호는 다 뺴야함 ex)font-size = fontSize
 
 
-state
+state 
 왜 state 써야함 ?
 변수가 변경이 되면 html에 자동으로 반영이 안되는데 state는 자동으로 HTML 재렌더링됨
 
@@ -82,7 +82,7 @@ ex) 이렇게 가져올수 있다 b.name b.age
 
 순서 
 1.  <BrowserRouter>
-    <App />
+    <App /> 
     </BrowserRouter> 
     인덱스 js 파일에 임폴트로 브라우저라우터 가져온후 앱 밖에 랩핑
 2. import { Routes,Route, Link } from 'react-router-dom';
@@ -107,7 +107,7 @@ useNavigate(); 인자에 url 경로를 쓰면 매끄럽게 이동, 콜백함수
 
 라우트 안에 path값안 상세페이지 이동시키기 위한 네스티드 라우터예시
 Outlet은 네스티드 라우터 보여줄 위치를 설정
-
+ 
 ****URL 파라미터
 useParams(); 
 유저가 URL파라미터에 입력한거 가져오려면 쓰면됨
@@ -115,7 +115,7 @@ useParams();
 
 styled-commpoenets 장점
 1. 컴포넌트 안에서 바로 작성가능(CSS 컴포넌트화)
-2. 스타일이 다른 js파일로 오염되지 않음
+2. 스타일이 다른 js파일로 오염되지 않음 
 3. 로딩시간을 단축시켜줌
 
 useEffect 
@@ -145,7 +145,93 @@ useEffect(()=>{   }) - 1. 재렌더링마다 코드 실행시킬 때
 useEffect(()=>{   }, []) - 2. mount시 1회 코드 실행시킬 때 5. [count] 특정 state 변경시 실행하려면
 useEffect(()=>{ 
     return ()=> {
-        3. unmount시 1회 코드 실행할 때
+        3. unmount시 1회 코드 실행할 때 
     }
     },[])
 4. useEffect 실행 전에 뭔가 실행하려면 언제나 return ()=> {} 클린업 함수 
+
+ajax 
+
+npm i axios 엑시오스 라이브러리사용 
+1. get 요청은 axios.get('url') 
+
+
+서버로 데이터전송하는 post요청
+axios.post('/saffaf', {name : KIm})
+
+
+동시에 ajax 요청 여러개 하려면
+
+promise.all([ axios.get('/url1'), axios.get('/url2') ])
+.then(()=>{
+    성공 햇을때
+}) 
+
+원래는 서버와 문자만 주고받을 수 있습니다.(JSON)
+
+fetch() 기본 JS문법 
+.then(결과 => 결과.json())
+.then(data=>())
+
+컴포넌트가 여러개 중첩되어있으면 귀찮은 점
+SPA 단점
+컴포넌트간 state 공유 어려움
+
+Context API 
+props 전송없이 state 공유가능
+
+사용법
+1. 최상의 컴포넌트에 변수로 export let Context1 = createContext(); 할당
+2. state를 상속 받고 싶은 컴포넌트에 import로 Context1을 최상의 컴포넌트에서 가져옴
+3. 가져온 State를 let {재고, shoes} = useContext(Context1) 
+형식으로 작성후 쓰면됨 
+
+Context1 안에 자식 컴포넌트 넣으면 됨 value 값 설정후
+<Context1.Provider value={{ 재고, shoes}}>
+    <Detail shoes={shoes} />
+    </Context1.Provider>
+
+Context API 단점 
+1. State 변경시 쓸데없는 것까지 재렌더링
+2. 나중에 컴포넌트 재사용이 어려움
+
+Redux 
+컴포넌트들이 props 없이 state 공유가능
+
+설치 
+npm install @reduxjs/toolkit react-redux
+
+store.js 파일 생성
+예제 )
+1. import { configureStore } from "@reduxjs/toolkit";
+
+
+export default configureStore({
+    reducer: {
+        
+    }
+})
+
+2. index.js 가서 
+<Provider store={store} 쓰기 
+
+리액트에서 자주 쓰이는 if문 작성패던 5개
+1. 컴포넌트 안에서 쓰는 if/else
+ex) function Component() {
+    if(true) {
+        return <p>참이면 보여줄 HTML</p>;
+    } else { 
+        return null;     (return 생략가능)
+    }
+}
+
+2. JSX 안에서 쓰는 삼항연산자  
+    조건식 ? <p>참이면보여줄 값</p> : null (중첩사용도 가능)
+
+
+3. && 연산자로 if 역할 대신하기
+
+4. switch / case 조건문
+
+if 문이 중첩해서 여러개 달려있는 경우에 씀
+    
